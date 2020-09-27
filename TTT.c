@@ -1,11 +1,14 @@
 #include <fcntl.h>
 #include <stdio.h>
 #include <io.h>
+#include <string.h>
 
 int gameState[] = {0,0,0,0,0,0,0,0,0};
 int gameOver = 0;
 int aMove;
 int bMove;
+char newGame;
+int replay ();
 
 void boardDraw() {
     int i;
@@ -75,9 +78,22 @@ void game() {
             break;
         };
     }
+    if (replay()) {
+      game();
+    } else {
+      printf("Goodbye, Thanks for playing.");
+    }
 }
 
-
+int replay () {
+    printf("Want to play again?\nUse y or n to confirm.\t");
+    scanf("%c",&newGame);
+    if (strcmp(newGame, "y") == 1) {  //Looked up how to check for string equality. Found strcmp, needed to import <string.h>, https://stackoverflow.com/questions/8372547/checking-contents-of-char-variable-c-programming
+      return 1;
+    } else {
+      return 0;
+    }
+}
 
 int main() {
     game();
